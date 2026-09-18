@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { apiFetch } from "../api/client";
 import { useAction } from "../hooks/useAction";
+import { useLookup } from "../hooks/useLookup";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
@@ -10,9 +11,12 @@ import type {
   AppointmentResponse,
   CheckInResponse,
   ConsultationType,
+  DepartmentSummary,
+  DoctorSummary,
   Gender,
   PatientRequest,
   PatientResponse,
+  PatientSummary,
   QueueTicketResponse,
 } from "../api/types";
 
@@ -92,6 +96,9 @@ function RegisterPatientPanel() {
 
 function BookAppointmentPanel() {
   const { session } = useAuth();
+  const patients = useLookup<PatientSummary>("/api/patients");
+  const doctors = useLookup<DoctorSummary>("/api/doctors");
+  const departments = useLookup<DepartmentSummary>("/api/departments");
   const [form, setForm] = useState({
     patientId: "",
     doctorId: "",
@@ -122,16 +129,43 @@ function BookAppointmentPanel() {
     <Panel title="Book appointment">
       <form className="inline-form" onSubmit={handleSubmit}>
         <label>
-          Patient ID
-          <input type="number" value={form.patientId} onChange={(e) => setForm({ ...form, patientId: e.target.value })} required />
+          Patient
+          <select value={form.patientId} onChange={(e) => setForm({ ...form, patientId: e.target.value })} required>
+            <option value="" disabled>
+              {patients.loading ? "Loading…" : "Select a patient"}
+            </option>
+            {patients.items.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.patientNumber} — {p.fullName}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
-          Doctor ID
-          <input type="number" value={form.doctorId} onChange={(e) => setForm({ ...form, doctorId: e.target.value })} required />
+          Doctor
+          <select value={form.doctorId} onChange={(e) => setForm({ ...form, doctorId: e.target.value })} required>
+            <option value="" disabled>
+              {doctors.loading ? "Loading…" : "Select a doctor"}
+            </option>
+            {doctors.items.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.firstName || d.lastName ? `${d.firstName} ${d.lastName}`.trim() : d.username}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
-          Department ID
-          <input type="number" value={form.departmentId} onChange={(e) => setForm({ ...form, departmentId: e.target.value })} required />
+          Department
+          <select value={form.departmentId} onChange={(e) => setForm({ ...form, departmentId: e.target.value })} required>
+            <option value="" disabled>
+              {departments.loading ? "Loading…" : "Select a department"}
+            </option>
+            {departments.items.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.name}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           Appointment date/time (must be in the future)

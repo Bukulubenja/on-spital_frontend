@@ -2,16 +2,18 @@ import { useState, type FormEvent } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { apiFetch } from "../api/client";
 import { useAction } from "../hooks/useAction";
+import { useLookup } from "../hooks/useLookup";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
-import type { InvoiceItemRequest, InvoiceView, PaymentMethod, PaymentRequest, PaymentResponse } from "../api/types";
+import type { InvoiceItemRequest, InvoiceView, PaymentMethod, PaymentRequest, PaymentResponse, ServiceSummary } from "../api/types";
 
 export function CashierPage() {
   const { session } = useAuth();
   const [visitId, setVisitId] = useState("");
   const vid = Number(visitId);
   const invoice = useAction(() => apiFetch<InvoiceView>(session!, `/api/visits/${vid}/invoice`));
+  const services = useLookup<ServiceSummary>("/api/services");
 
   const [item, setItem] = useState({ serviceId: "", quantity: "1" });
   const addItem = useAction((body: InvoiceItemRequest) =>
@@ -83,8 +85,17 @@ export function CashierPage() {
             }}
           >
             <label>
-              Service ID
-              <input type="number" value={item.serviceId} onChange={(e) => setItem({ ...item, serviceId: e.target.value })} required />
+              Service
+              <select value={item.serviceId} onChange={(e) => setItem({ ...item, serviceId: e.target.value })} required>
+                <option value="" disabled>
+                  {services.loading ? "Loading…" : "Select a service"}
+                </option>
+                {services.items.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name} ({s.price.toFixed(2)})
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
               Quantity

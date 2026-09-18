@@ -82,6 +82,10 @@ export type AppointmentResponse = {
 
 export type CheckInResponse = { visitId: number; queueNumber: number; status: string };
 
+export type PatientSummary = { id: number; patientNumber: string; fullName: string; phone: string };
+export type DoctorSummary = { id: number; username: string; firstName: string; lastName: string };
+export type DepartmentSummary = { id: number; name: string };
+
 export type QueueTicketResponse = {
   queueNumber: number;
   patientName: string;
@@ -113,6 +117,9 @@ export type PrescriptionItemRequest = {
 };
 
 export type LabTestOrderResponse = { testName: string; alreadyOrdered: boolean };
+
+export type DrugLookup = { id: number; name: string; strength: string };
+export type LabTestSummary = { id: number; name: string; price: number };
 
 // --- Nurse ---
 
@@ -148,6 +155,8 @@ export type DispenseResponse = { drugName: string; quantity: number; alreadyDisp
 // --- Cashier ---
 
 export type PaymentMethod = "CASH" | "MOBILE_MONEY" | "INSURANCE";
+
+export type ServiceSummary = { id: number; name: string; serviceType: string; price: number };
 
 export type InvoiceItem = { itemId: number; serviceName: string; quantity: number; price: number; subtotal: number };
 export type InvoicePaymentRecord = { receiptNumber: string; amountPaid: number; method: string; reference: string | null };

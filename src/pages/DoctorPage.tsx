@@ -2,12 +2,15 @@ import { useState, type FormEvent } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { apiFetch } from "../api/client";
 import { useAction } from "../hooks/useAction";
+import { useLookup } from "../hooks/useLookup";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
 import type {
   DiagnosisRequest,
+  DrugLookup,
   LabTestOrderResponse,
+  LabTestSummary,
   PrescriptionItemRequest,
   VisitStatusResponse,
   VitalsRequest,
@@ -17,6 +20,8 @@ export function DoctorPage() {
   const { session } = useAuth();
   const [visitId, setVisitId] = useState("");
   const vid = Number(visitId);
+  const drugs = useLookup<DrugLookup>("/api/drugs");
+  const labTests = useLookup<LabTestSummary>("/api/lab-tests");
 
   const start = useAction(() => apiFetch<VisitStatusResponse>(session!, `/api/visits/${vid}/start`, { method: "POST" }));
   const complete = useAction(() => apiFetch<VisitStatusResponse>(session!, `/api/visits/${vid}/complete`, { method: "POST" }));
@@ -156,8 +161,17 @@ export function DoctorPage() {
             }}
           >
             <label>
-              Drug ID
-              <input type="number" value={prescription.drugId} onChange={(e) => setPrescription({ ...prescription, drugId: e.target.value })} required />
+              Drug
+              <select value={prescription.drugId} onChange={(e) => setPrescription({ ...prescription, drugId: e.target.value })} required>
+                <option value="" disabled>
+                  {drugs.loading ? "Loading…" : "Select a drug"}
+                </option>
+                {drugs.items.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name} ({d.strength})
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
               Quantity
@@ -196,8 +210,17 @@ export function DoctorPage() {
             }}
           >
             <label>
-              Test ID
-              <input type="number" value={testId} onChange={(e) => setTestId(e.target.value)} required />
+              Lab test
+              <select value={testId} onChange={(e) => setTestId(e.target.value)} required>
+                <option value="" disabled>
+                  {labTests.loading ? "Loading…" : "Select a test"}
+                </option>
+                {labTests.items.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name} ({t.price.toFixed(2)})
+                  </option>
+                ))}
+              </select>
             </label>
             <button type="submit" disabled={!visitReady || labTestAction.loading}>
               {labTestAction.loading ? "Ordering…" : "Order test"}
