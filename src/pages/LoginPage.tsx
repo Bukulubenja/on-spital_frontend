@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth, type Role } from "../auth/AuthContext";
 import { ApiError, verifyLogin } from "../api/client";
 
 export function LoginPage() {
@@ -16,8 +16,8 @@ export function LoginPage() {
     setSubmitting(true);
     const candidate = { subdomain, username, password };
     try {
-      await verifyLogin(candidate);
-      login(candidate);
+      const identity = await verifyLogin(candidate);
+      login({ ...candidate, role: identity.role as Role });
     } catch (err) {
       setError(err instanceof ApiError && err.status === 401 ? "Invalid username or password." : "Could not reach the server.");
     } finally {

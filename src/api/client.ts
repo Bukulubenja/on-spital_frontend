@@ -1,4 +1,8 @@
-import type { Session } from "../auth/AuthContext";
+export type Credentials = {
+  subdomain: string;
+  username: string;
+  password: string;
+};
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -11,13 +15,13 @@ export class ApiError extends Error {
   }
 }
 
-export async function apiFetch<T>(session: Session, path: string, init?: RequestInit): Promise<T> {
+export async function apiFetch<T>(credentials: Credentials, path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
     headers: {
       ...init?.headers,
-      Authorization: `Basic ${btoa(`${session.username}:${session.password}`)}`,
-      "X-Hospital-Subdomain": session.subdomain,
+      Authorization: `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`,
+      "X-Hospital-Subdomain": credentials.subdomain,
       "Content-Type": "application/json",
     },
   });
@@ -30,6 +34,6 @@ export async function apiFetch<T>(session: Session, path: string, init?: Request
   return (await response.json()) as T;
 }
 
-export async function verifyLogin(session: Session): Promise<{ username: string; role: string; hospitalSubdomain: string }> {
-  return apiFetch(session, "/api/whoami");
+export async function verifyLogin(credentials: Credentials): Promise<{ username: string; role: string; hospitalSubdomain: string }> {
+  return apiFetch(credentials, "/api/whoami");
 }

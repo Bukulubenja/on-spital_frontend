@@ -1,9 +1,20 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 
+export type Role =
+  | "ADMIN"
+  | "RECEPTIONIST"
+  | "DOCTOR"
+  | "NURSE"
+  | "LAB"
+  | "PHARMACIST"
+  | "CASHIER"
+  | "STOCK_MANAGER";
+
 export type Session = {
   subdomain: string;
   username: string;
   password: string;
+  role: Role;
 };
 
 type AuthContextValue = {
