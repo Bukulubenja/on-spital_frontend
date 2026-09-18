@@ -1,0 +1,51 @@
+import { useState, type FormEvent } from "react";
+import { useAuth } from "../auth/AuthContext";
+import { ApiError, verifyLogin } from "../api/client";
+
+export function LoginPage() {
+  const { login } = useAuth();
+  const [subdomain, setSubdomain] = useState("stjohns");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    const candidate = { subdomain, username, password };
+    try {
+      await verifyLogin(candidate);
+      login(candidate);
+    } catch (err) {
+      setError(err instanceof ApiError && err.status === 401 ? "Invalid username or password." : "Could not reach the server.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="login-page">
+      <form className="login-card" onSubmit={handleSubmit}>
+        <h1>HMS Staff Login</h1>
+        <label>
+          Hospital subdomain
+          <input value={subdomain} onChange={(e) => setSubdomain(e.target.value)} required />
+        </label>
+        <label>
+          Username
+          <input value={username} onChange={(e) => setUsername(e.target.value)} required autoFocus />
+        </label>
+        <label>
+          Password
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </label>
+        {error && <p className="error">{error}</p>}
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Signing in…" : "Sign in"}
+        </button>
+      </form>
+    </div>
+  );
+}
