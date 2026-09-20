@@ -31,7 +31,11 @@ export function LoginPage() {
         <h1>HMS Staff Login</h1>
         <label>
           Hospital subdomain
-          <input value={subdomain} onChange={(e) => setSubdomain(e.target.value)} required />
+          <input
+            value={subdomain}
+            onChange={(e) => setSubdomain(e.target.value)}
+            placeholder="leave blank for a platform/developer login"
+          />
         </label>
         <label>
           Username

@@ -8,7 +8,8 @@ export type Role =
   | "LAB"
   | "PHARMACIST"
   | "CASHIER"
-  | "STOCK_MANAGER";
+  | "STOCK_MANAGER"
+  | "PLATFORM_OPERATOR";
 
 export type Session = {
   subdomain: string;

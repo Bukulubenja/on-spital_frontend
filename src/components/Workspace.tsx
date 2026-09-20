@@ -7,7 +7,7 @@ export function Workspace({ title, children }: { title: string; children: ReactN
     <>
       <header className="topbar">
         <span className="identity">
-          <b>{title}</b> — {session?.username} ({session?.role}) @ {session?.subdomain}
+          <b>{title}</b> — {session?.username} ({session?.role}){session?.subdomain ? ` @ ${session.subdomain}` : ""}
         </span>
         <button onClick={logout}>Sign out</button>
       </header>

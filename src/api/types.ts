@@ -201,3 +201,8 @@ export type DrugStockDetailView = {
 };
 export type ReceiveStockRequest = { batchNumber: string; quantity: number; expiryDate: string };
 export type AdjustStockRequest = { batchId: number; quantity: number; reason: string };
+
+// --- Platform (developer dashboard) ---
+
+export type Hospital = { id: number; name: string; subdomain: string; active: boolean; createdAt: string };
+export type CreateHospitalRequest = { name: string; subdomain: string };

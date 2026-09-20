@@ -10,6 +10,7 @@ import { LabPage } from "./pages/LabPage";
 import { PharmacyPage } from "./pages/PharmacyPage";
 import { CashierPage } from "./pages/CashierPage";
 import { StockManagerPage } from "./pages/StockManagerPage";
+import { DeveloperPage } from "./pages/DeveloperPage";
 import "./App.css";
 
 const HOME_BY_ROLE: Record<Role, string> = {
@@ -21,6 +22,7 @@ const HOME_BY_ROLE: Record<Role, string> = {
   PHARMACIST: "/pharmacy",
   CASHIER: "/cashier",
   STOCK_MANAGER: "/stock",
+  PLATFORM_OPERATOR: "/platform",
 };
 
 function RequireRole({ role, children }: { role: Role; children: ReactNode }) {
@@ -98,6 +100,14 @@ function Shell() {
         element={
           <RequireRole role="STOCK_MANAGER">
             <StockManagerPage />
+          </RequireRole>
+        }
+      />
+      <Route
+        path="/platform"
+        element={
+          <RequireRole role="PLATFORM_OPERATOR">
+            <DeveloperPage />
           </RequireRole>
         }
       />
