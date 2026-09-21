@@ -15,7 +15,7 @@ const ROLE_LABEL: Record<string, string> = {
 
 function DashboardIcon() {
   return (
-    <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2.5" y="2.5" width="6.5" height="6.5" rx="1.4" />
       <rect x="11" y="2.5" width="6.5" height="6.5" rx="1.4" />
       <rect x="2.5" y="11" width="6.5" height="6.5" rx="1.4" />
@@ -26,7 +26,7 @@ function DashboardIcon() {
 
 function SectionIcon() {
   return (
-    <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="10" cy="10" r="3" />
     </svg>
   );
@@ -34,7 +34,7 @@ function SectionIcon() {
 
 function LogoutIcon() {
   return (
-    <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8 3H4.5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1H8" />
       <path d="M13 14l4-4-4-4" />
       <path d="M17 10H7.5" />

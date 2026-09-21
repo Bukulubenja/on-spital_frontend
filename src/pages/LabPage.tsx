@@ -5,6 +5,7 @@ import { useAction } from "../hooks/useAction";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type { LabOrderView, LabResultRequest, LabResultResponse } from "../api/types";
 
 function ResultForm({ visitId, itemId, testName, onRecorded }: { visitId: number; itemId: number; testName: string; onRecorded: () => void }) {
@@ -67,14 +68,14 @@ export function LabPage() {
             Visit ID
             <input type="number" value={visitId} onChange={(e) => setVisitId(e.target.value)} required />
           </label>
-          <button type="submit" disabled={order.loading}>
+          <button type="submit" className="button-secondary" disabled={order.loading}>
             {order.loading ? "Loading…" : "Load lab order"}
           </button>
         </form>
         {order.error && <Notice kind="error">{order.error}</Notice>}
         {order.result && (
           <p className="meta">
-            Visit status: <span className="badge">{order.result.status}</span>
+            Visit status: <Badge>{order.result.status}</Badge>
           </p>
         )}
       </Panel>

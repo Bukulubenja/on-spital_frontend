@@ -9,11 +9,32 @@
   --accent-soft: #eff6ff;
   --danger: #b91c1c;
   --danger-bg: #fef2f2;
+  --warning: #92400e;
+  --warning-bg: #fffbeb;
+  --success-c: #15803d;
+  --success-bg: #f0fdf4;
   --shadow: rgba(15, 23, 42, 0.08) 0 1px 2px, rgba(15, 23, 42, 0.06) 0 8px 24px;
 
   --sidebar-w: 248px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Spacing scale (4px base). New components should reference these instead
+     of one-off pixel values; existing hand-tuned spacing is left as-is. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+
+  --sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
 
   font: 16px/1.5 var(--sans);
   color-scheme: light dark;
@@ -36,6 +57,10 @@
     --accent-h: #60a5fa;
     --danger: #f87171;
     --danger-bg: #2a1414;
+    --warning: #fbbf24;
+    --warning-bg: #2a2210;
+    --success-c: #4ade80;
+    --success-bg: #0f2416;
     --accent-soft: #17223b;
     --shadow: rgba(0, 0, 0, 0.4) 0 1px 2px, rgba(0, 0, 0, 0.3) 8px 24px;
   }
@@ -85,9 +110,10 @@ tr:last-child td {
 
 button {
   font: inherit;
+  font-weight: 500;
   cursor: pointer;
-  border: none;
-  border-radius: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   background: var(--accent);
   color: white;
   padding: 8px 16px;
@@ -100,6 +126,48 @@ button:hover {
 button:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+/* Secondary: utility/fetch actions (Refresh, Load…) that support the panel
+   rather than commit it — kept visually quieter than the primary action. */
+button.button-secondary {
+  background: transparent;
+  color: var(--text-h);
+  border-color: var(--border);
+}
+
+button.button-secondary:hover {
+  background: var(--bg);
+}
+
+/* Danger: destructive or loss-recording actions (e.g. stock write-off). */
+button.button-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+button.button-danger:hover {
+  background: var(--danger-bg);
+}
+
+a,
+button,
+input,
+select,
+textarea,
+[tabindex] {
+  outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
 }
 
 input {
@@ -120,18 +188,24 @@ input {
 }
 
 .success {
-  color: #15803d;
-  background: #f0fdf4;
+  color: var(--success-c);
+  background: var(--success-bg);
   border-radius: 6px;
   padding: 8px 12px;
   font-size: 14px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .success {
-    color: #4ade80;
-    background: #0f2416;
-  }
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.empty-state {
+  color: var(--text);
+  font-size: 13.5px;
+  padding: 20px 12px;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
 }
 
 select,
@@ -427,10 +501,39 @@ form.inline-form label {
 }
 
 .badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
+  font-weight: 500;
   padding: 2px 8px;
   border-radius: 999px;
   background: var(--bg);
+  color: var(--text-h);
   border: 1px solid var(--border);
+  text-transform: none;
+}
+
+.badge-success {
+  background: var(--success-bg);
+  color: var(--success-c);
+  border-color: transparent;
+}
+
+.badge-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: transparent;
+}
+
+.badge-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: transparent;
+}
+
+.badge-neutral {
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--border);
 }

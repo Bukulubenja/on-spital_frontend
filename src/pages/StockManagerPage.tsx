@@ -5,6 +5,7 @@ import { useAction } from "../hooks/useAction";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type { AdjustStockRequest, DrugStockDetailView, ReceiveStockRequest, StockDashboardView } from "../api/types";
 
 function DashboardPanel() {
@@ -13,7 +14,7 @@ function DashboardPanel() {
 
   return (
     <Panel title="Stock dashboard">
-      <button onClick={() => action.run().catch(() => {})} disabled={action.loading}>
+      <button className="button-secondary" onClick={() => action.run().catch(() => {})} disabled={action.loading}>
         {action.loading ? "Loading…" : "Refresh"}
       </button>
       {action.error && <Notice kind="error">{action.error}</Notice>}
@@ -70,7 +71,7 @@ function DrugDetailPanel() {
             Drug ID
             <input type="number" value={drugId} onChange={(e) => setDrugId(e.target.value)} required />
           </label>
-          <button type="submit" disabled={detail.loading}>
+          <button type="submit" className="button-secondary" disabled={detail.loading}>
             {detail.loading ? "Loading…" : "Load"}
           </button>
         </form>
@@ -83,7 +84,7 @@ function DrugDetailPanel() {
                   {b.batchNumber} — qty {b.quantity}
                 </span>
                 <span className="meta">
-                  expires {b.expiryDate} <span className="badge">{b.status}</span>
+                  expires {b.expiryDate} <Badge>{b.status}</Badge>
                 </span>
               </div>
             ))}
@@ -146,7 +147,7 @@ function DrugDetailPanel() {
               Reason
               <input value={adjust.reason} onChange={(e) => setAdjust({ ...adjust, reason: e.target.value })} required />
             </label>
-            <button type="submit" disabled={!drugId || adjustAction.loading}>
+            <button type="submit" className="button-danger" disabled={!drugId || adjustAction.loading}>
               {adjustAction.loading ? "Adjusting…" : "Adjust stock"}
             </button>
             {adjustAction.error && <Notice kind="error">{adjustAction.error}</Notice>}

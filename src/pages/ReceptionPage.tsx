@@ -6,6 +6,7 @@ import { useLookup } from "../hooks/useLookup";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type {
   AppointmentRequest,
   AppointmentResponse,
@@ -237,7 +238,7 @@ function QueuePanel() {
 
   return (
     <Panel title="Today's queue">
-      <button onClick={() => action.run().catch(() => {})} disabled={action.loading}>
+      <button className="button-secondary" onClick={() => action.run().catch(() => {})} disabled={action.loading}>
         {action.loading ? "Loading…" : "Refresh"}
       </button>
       {action.error && <Notice kind="error">{action.error}</Notice>}
@@ -250,7 +251,7 @@ function QueuePanel() {
                 #{t.queueNumber} — {t.patientName}
               </span>
               <span className="meta">
-                Dr. {t.doctorUsername ?? "unassigned"} {t.served && <span className="badge">served</span>}
+                Dr. {t.doctorUsername ?? "unassigned"} {t.served && <Badge tone="success">Served</Badge>}
               </span>
             </div>
           ))}

@@ -27,7 +27,7 @@ function StatTile({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="stat-tile">
       <span className="stat-icon">
-        <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d={ICON_PATHS[iconFor(label)]} />
         </svg>
       </span>
@@ -74,47 +74,55 @@ export function DashboardPage() {
           </section>
 
           <Panel title="Recent patients">
-            <table>
-              <thead>
-                <tr>
-                  <th>Patient #</th>
-                  <th>Name</th>
-                  <th>Registered</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.recentPatients.map((p) => (
-                  <tr key={p.id}>
-                    <td>{p.patientNumber}</td>
-                    <td>{p.fullName}</td>
-                    <td>{new Date(p.createdAt).toLocaleString()}</td>
+            {data.recentPatients.length === 0 ? (
+              <p className="empty-state">No patients registered yet.</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient #</th>
+                    <th>Name</th>
+                    <th>Registered</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.recentPatients.map((p) => (
+                    <tr key={p.id}>
+                      <td>{p.patientNumber}</td>
+                      <td>{p.fullName}</td>
+                      <td>{new Date(p.createdAt).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </Panel>
 
           <Panel title="Recent payments">
-            <table>
-              <thead>
-                <tr>
-                  <th>Receipt #</th>
-                  <th>Patient</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.recentPayments.map((p) => (
-                  <tr key={p.id}>
-                    <td>{p.receiptNumber}</td>
-                    <td>{p.patientName}</td>
-                    <td>{p.amountPaid.toFixed(2)}</td>
-                    <td>{new Date(p.paymentDate).toLocaleString()}</td>
+            {data.recentPayments.length === 0 ? (
+              <p className="empty-state">No payments recorded yet.</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Receipt #</th>
+                    <th>Patient</th>
+                    <th>Amount</th>
+                    <th>Date</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.recentPayments.map((p) => (
+                    <tr key={p.id}>
+                      <td>{p.receiptNumber}</td>
+                      <td>{p.patientName}</td>
+                      <td className="tabular">{p.amountPaid.toFixed(2)}</td>
+                      <td>{new Date(p.paymentDate).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </Panel>
         </>
       )}

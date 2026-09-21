@@ -5,6 +5,7 @@ import { useAction } from "../hooks/useAction";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type { NurseQueueEntry, VitalsRequest } from "../api/types";
 
 function QueuePanel({ onPick }: { onPick: (visitId: number) => void }) {
@@ -13,7 +14,7 @@ function QueuePanel({ onPick }: { onPick: (visitId: number) => void }) {
 
   return (
     <Panel title="Triage queue">
-      <button onClick={() => action.run().catch(() => {})} disabled={action.loading}>
+      <button className="button-secondary" onClick={() => action.run().catch(() => {})} disabled={action.loading}>
         {action.loading ? "Loading…" : "Refresh"}
       </button>
       {action.error && <Notice kind="error">{action.error}</Notice>}
@@ -27,7 +28,7 @@ function QueuePanel({ onPick }: { onPick: (visitId: number) => void }) {
               </span>
               <span className="meta">
                 Dr. {entry.doctorUsername ?? "unassigned"}
-                {entry.hasVitals ? <span className="badge">vitals recorded</span> : <button onClick={() => onPick(entry.visitId)}>Record vitals</button>}
+                {entry.hasVitals ? <Badge tone="success">Vitals recorded</Badge> : <button onClick={() => onPick(entry.visitId)}>Record vitals</button>}
               </span>
             </div>
           ))}

@@ -5,6 +5,7 @@ import { useAction } from "../hooks/useAction";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type { DispenseResponse, PrescriptionView } from "../api/types";
 
 export function PharmacyPage() {
@@ -30,7 +31,7 @@ export function PharmacyPage() {
             Visit ID
             <input type="number" value={visitId} onChange={(e) => setVisitId(e.target.value)} required />
           </label>
-          <button type="submit" disabled={prescription.loading}>
+          <button type="submit" className="button-secondary" disabled={prescription.loading}>
             {prescription.loading ? "Loading…" : "Load prescription"}
           </button>
         </form>
@@ -51,7 +52,7 @@ export function PharmacyPage() {
                 <span className="meta">
                   stock: {item.availableStock}{" "}
                   {item.dispensed ? (
-                    <span className="badge">dispensed</span>
+                    <Badge tone="success">Dispensed</Badge>
                   ) : (
                     <button
                       disabled={!prescription.result!.canDispense || dispense.loading}

@@ -5,6 +5,7 @@ import { useAction } from "../hooks/useAction";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type { CreateHospitalRequest, Hospital } from "../api/types";
 
 function HospitalsPanel() {
@@ -23,7 +24,7 @@ function HospitalsPanel() {
 
   return (
     <Panel title="Hospitals">
-      <button onClick={() => list.run().catch(() => {})} disabled={list.loading}>
+      <button className="button-secondary" onClick={() => list.run().catch(() => {})} disabled={list.loading}>
         {list.loading ? "Loading…" : "Refresh"}
       </button>
       {list.error && <Notice kind="error">{list.error}</Notice>}
@@ -36,8 +37,9 @@ function HospitalsPanel() {
                 {h.name} <span className="meta">({h.subdomain})</span>
               </span>
               <span className="meta">
-                <span className="badge">{h.active ? "ACTIVE" : "INACTIVE"}</span>{" "}
+                <Badge tone={h.active ? "success" : "neutral"}>{h.active ? "Active" : "Inactive"}</Badge>{" "}
                 <button
+                  className={h.active ? "button-danger" : undefined}
                   disabled={toggle.loading}
                   onClick={() => toggle.run(h).then(() => list.run()).catch(() => {})}
                 >

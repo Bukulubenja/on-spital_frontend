@@ -6,6 +6,7 @@ import { useLookup } from "../hooks/useLookup";
 import { Workspace } from "../components/Workspace";
 import { Panel } from "../components/Panel";
 import { Notice } from "../components/Notice";
+import { Badge } from "../components/Badge";
 import type { InvoiceItemRequest, InvoiceView, PaymentMethod, PaymentRequest, PaymentResponse, ServiceSummary } from "../api/types";
 
 export function CashierPage() {
@@ -39,7 +40,7 @@ export function CashierPage() {
             Visit ID
             <input type="number" value={visitId} onChange={(e) => setVisitId(e.target.value)} required />
           </label>
-          <button type="submit" disabled={invoice.loading}>
+          <button type="submit" className="button-secondary" disabled={invoice.loading}>
             {invoice.loading ? "Loading…" : "Load invoice"}
           </button>
         </form>
@@ -48,7 +49,7 @@ export function CashierPage() {
           <>
             <p className="meta">
               Total: {invoice.result.totalAmount.toFixed(2)} — Paid: {invoice.result.amountPaid.toFixed(2)} — Balance:{" "}
-              {invoice.result.balanceDue.toFixed(2)} — <span className="badge">{invoice.result.status}</span>
+              {invoice.result.balanceDue.toFixed(2)} — <Badge>{invoice.result.status}</Badge>
             </p>
             <div className="item-list">
               {invoice.result.items.map((it) => (
