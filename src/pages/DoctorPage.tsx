@@ -52,7 +52,7 @@ export function DoctorPage() {
   const visitReady = visitId.length > 0 && !Number.isNaN(vid);
 
   return (
-    <Workspace title="Doctor">
+    <Workspace title="Doctor" sections={["Visit", "Record vitals", "Record diagnosis", "Add prescription item", "Order lab test"]}>
       <Panel title="Visit">
         <label>
           Visit ID

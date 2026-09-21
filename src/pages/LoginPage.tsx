@@ -28,7 +28,11 @@ export function LoginPage() {
   return (
     <div className="login-page">
       <form className="login-card" onSubmit={handleSubmit}>
-        <h1>HMS Staff Login</h1>
+        <div className="login-brand">
+          <span className="avatar">HMS</span>
+          <span className="login-title">Hospital Management System</span>
+        </div>
+        <h1>Staff Login</h1>
         <label>
           Hospital subdomain
           <input

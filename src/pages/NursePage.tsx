@@ -97,7 +97,7 @@ function VitalsPanel({ visitId, setVisitId }: { visitId: string; setVisitId: (v:
 export function NursePage() {
   const [visitId, setVisitId] = useState("");
   return (
-    <Workspace title="Nurse">
+    <Workspace title="Nurse" sections={["Triage queue", "Record vitals"]}>
       <div className="panel-row">
         <QueuePanel onPick={(id) => setVisitId(String(id))} />
         <VitalsPanel visitId={visitId} setVisitId={setVisitId} />

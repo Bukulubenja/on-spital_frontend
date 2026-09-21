@@ -54,7 +54,7 @@ export function LabPage() {
   const order = useAction(() => apiFetch<LabOrderView>(session!, `/api/visits/${vid}/lab-order`));
 
   return (
-    <Workspace title="Lab">
+    <Workspace title="Lab" sections={["Lab order"]}>
       <Panel title="Lab order">
         <form
           className="inline-form"

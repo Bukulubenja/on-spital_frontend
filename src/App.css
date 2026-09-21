@@ -3,18 +3,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--bg);
 }
 
 .login-card {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  width: 320px;
+  width: 340px;
   padding: 32px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: var(--shadow);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.login-brand .avatar {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.login-brand span.login-title {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.login-card h1 {
+  font-size: 18px;
 }
 
 .login-card label {
@@ -27,8 +50,8 @@
 
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
 }
 
 .stat-tile {
@@ -36,15 +59,31 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stat-icon {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stat-value {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text-h);
+  line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 13px;
-  margin-top: 4px;
+  font-size: 12.5px;
+  margin-top: 2px;
 }

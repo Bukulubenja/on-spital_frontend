@@ -26,7 +26,7 @@ export function CashierPage() {
   );
 
   return (
-    <Workspace title="Cashier">
+    <Workspace title="Cashier" sections={["Invoice", "Add invoice item", "Record payment"]}>
       <Panel title="Invoice">
         <form
           className="inline-form"

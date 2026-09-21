@@ -160,7 +160,7 @@ function DrugDetailPanel() {
 
 export function StockManagerPage() {
   return (
-    <Workspace title="Stock Manager">
+    <Workspace title="Stock Manager" sections={["Stock dashboard", "Drug stock detail", "Receive stock", "Adjust stock (write off)"]}>
       <DashboardPanel />
       <DrugDetailPanel />
     </Workspace>

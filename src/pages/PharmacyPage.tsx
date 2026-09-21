@@ -17,7 +17,7 @@ export function PharmacyPage() {
   );
 
   return (
-    <Workspace title="Pharmacy">
+    <Workspace title="Pharmacy" sections={["Prescription", "Items"]}>
       <Panel title="Prescription">
         <form
           className="inline-form"

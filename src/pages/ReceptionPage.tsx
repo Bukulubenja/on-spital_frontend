@@ -262,7 +262,7 @@ function QueuePanel() {
 
 export function ReceptionPage() {
   return (
-    <Workspace title="Reception">
+    <Workspace title="Reception" sections={["Register patient", "Book appointment", "Check in", "Today's queue"]}>
       <div className="panel-row">
         <RegisterPatientPanel />
         <BookAppointmentPanel />

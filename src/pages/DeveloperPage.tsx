@@ -105,7 +105,7 @@ export function DeveloperPage() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   return (
-    <Workspace title="Developer">
+    <Workspace title="Developer" sections={["Add a hospital", "Hospitals"]}>
       <AddHospitalPanel onCreated={() => setRefreshKey((k) => k + 1)} />
       <HospitalsPanel key={refreshKey} />
     </Workspace>
